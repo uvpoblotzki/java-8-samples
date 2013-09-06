@@ -14,7 +14,6 @@ public class CollectionLambdaTest {
     List<String> names = Arrays.asList("Ulrich", "Sandra", "Elsa");
 
     // Filter and sort the list of names
-
     names.stream()
         .filter(containsPredicate("a")) // predicate creator
         .filter(containsPredicate("l"))
