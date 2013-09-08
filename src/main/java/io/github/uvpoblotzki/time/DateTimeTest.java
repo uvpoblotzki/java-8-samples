@@ -13,6 +13,18 @@ import static java.lang.System.out;
 
 public class DateTimeTest {
 
+  private static class Tuple<T, R> {
+    public final T _1;
+    public final R _2;
+
+    private Tuple(T _1, R _2) {
+      this._1 = _1;
+      this._2 = _2;
+    }
+
+    public static <U,V> Tuple<U,V> from(U t, V r) {return new Tuple<>(t, r);}
+  }
+
   // Birthdays
   private static Map<String, String> birthDays = new HashMap<String, String>() {{
     put("Ulrich", "1974-05-09");
@@ -39,11 +51,15 @@ public class DateTimeTest {
   private void testPeriod() {
     out.printf("--------------------- Test Period ------------------------------\n");
 
-    birthDays.entrySet().forEach(e -> {
-      TemporalAccessor bDay = stringToTime(e.getValue());
-      Period since = Period.between(LocalDate.from(bDay), LocalDate.now());
-      out.printf("%s was born %s years, %s months, %s days ago.\n", e.getKey(),
-          since.getYears(), since.getMonths(), since.getDays());
+    birthDays.entrySet().stream().map(e -> {
+      // string to Time
+      return Tuple.from(e.getKey(), stringToTime(e.getValue()));
+    }).map(t -> {
+      // Time to Period
+      return Tuple.from(t._1, Period.between(LocalDate.from(t._2), LocalDate.now()));
+    }).forEach(t -> {
+      out.printf("%s was born %s years, %s months, %s days ago.\n", t._1,
+          t._2.getYears(), t._2.getMonths(), t._2.getDays());
     });
   }
 
