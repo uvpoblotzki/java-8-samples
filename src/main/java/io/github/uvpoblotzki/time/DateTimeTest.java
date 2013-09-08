@@ -2,7 +2,6 @@ package io.github.uvpoblotzki.time;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.JapaneseDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
